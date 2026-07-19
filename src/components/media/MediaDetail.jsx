@@ -2,11 +2,11 @@ import { useState } from "react";
 import { ArrowRight, Pencil, Save } from "lucide-react";
 import { mediaUrl } from "@/lib/mediaParser";
 
-export default function MediaDetail({ item, onBack, onSave }) {
+export default function MediaDetail({ item, onBack, onSave, isAdmin }) {
   const [editing, setEditing] = useState(false); const [name, setName] = useState(item.displayName); const [description, setDescription] = useState(item.description || "");
   const save = () => { onSave(item.id, { displayName: name.trim() || item.originalName, description }); setEditing(false); };
   return <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6" dir="rtl">
-    <div className="mb-5 flex items-center justify-between gap-4"><button onClick={onBack} className="flex shrink-0 items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-bold transition hover:bg-slate-100 dark:border-white/10 dark:hover:bg-white/10"><ArrowRight className="h-4 w-4" /> חזור לעמוד מיון</button><button onClick={editing ? save : () => setEditing(true)} className="flex items-center gap-2 rounded-full bg-amber-400 px-4 py-2 text-sm font-bold text-slate-950">{editing ? <Save className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}{editing ? "שמירה" : "עריכה"}</button></div>
+    <div className="mb-5 flex items-center justify-between gap-4"><button onClick={onBack} className="flex shrink-0 items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-bold transition hover:bg-slate-100 dark:border-white/10 dark:hover:bg-white/10"><ArrowRight className="h-4 w-4" /> חזור לעמוד מיון</button>{isAdmin && <button onClick={editing ? save : () => setEditing(true)} className="flex items-center gap-2 rounded-full bg-amber-400 px-4 py-2 text-sm font-bold text-slate-950">{editing ? <Save className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}{editing ? "שמירה" : "עריכה"}</button>}</div>
     {editing ? <input value={name} onChange={(e) => setName(e.target.value)} className="mb-5 w-full rounded-2xl border border-amber-400 bg-white p-4 text-2xl font-black outline-none dark:bg-slate-900" /> : <h1 className="mb-5 text-3xl font-black text-slate-950 dark:text-white sm:text-5xl">{item.displayName}</h1>}
     <div className="overflow-hidden rounded-3xl bg-black shadow-2xl">{item.type === "תמונה" ? <img src={mediaUrl(item)} alt={item.displayName} className="mx-auto max-h-[62vh] w-full object-contain" /> : <iframe src={mediaUrl(item)} title={item.displayName} allow="autoplay; encrypted-media" allowFullScreen className="aspect-video w-full" />}</div>
     <div className="mt-6 grid gap-6 rounded-3xl border border-slate-200 bg-white p-5 dark:border-white/10 dark:bg-slate-900 sm:p-7 lg:grid-cols-[1fr_2fr]">
