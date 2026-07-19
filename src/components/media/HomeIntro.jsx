@@ -1,18 +1,12 @@
 import { ArrowLeft } from "lucide-react";
 
-export default function HomeIntro({ categories, onEnter, syncError }) {
-  return <section className="mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl items-center gap-10 px-5 py-12 lg:grid-cols-[1.05fr_.95fr] lg:px-8" dir="rtl">
-    <div>
-      <p className="mb-5 text-sm font-bold tracking-[.22em] text-amber-500">סיפור • זיכרון • עדות</p>
-      
-      <p className="mt-7 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300"></p>
-      {syncError && <p className="mt-5 max-w-xl rounded-2xl border border-amber-300/50 bg-amber-50 p-4 text-sm text-amber-900 dark:bg-amber-400/10 dark:text-amber-200">הגיליון אינו זמין כרגע לצפייה ציבורית. לאחר עדכון הרשאת השיתוף, לחצו על כפתור הסנכרון למעלה.</p>}
-      <button onClick={() => onEnter("")} className="mt-8 inline-flex items-center gap-3 rounded-full bg-slate-950 px-6 py-3.5 font-bold text-white transition hover:-translate-y-0.5 dark:bg-white dark:text-slate-950">לכל פריטי המדיה <ArrowLeft className="h-4 w-4" /></button>
-    </div>
-    <div className="rounded-[2rem] border border-slate-200 bg-white/70 p-5 shadow-2xl shadow-slate-200/60 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:shadow-black/20">
-      <p className="mb-4 px-2 text-sm font-bold text-slate-500 dark:text-slate-400"></p>
-      <div className="grid max-h-[55vh] grid-cols-1 gap-3 overflow-auto sm:grid-cols-2">{categories.map((category, index) => <button key={category} onClick={() => onEnter(category)} className="group flex min-h-28 flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-4 text-right transition hover:border-amber-400 hover:bg-amber-50 dark:border-white/10 dark:bg-slate-900 dark:hover:border-amber-400/70 dark:hover:bg-slate-800"><span className="text-xs text-slate-400">{String(index + 1).padStart(2, "0")}</span><span className="font-bold text-slate-900 dark:text-white">{category}</span></button>)}</div>
-      {!categories.length && <p className="py-12 text-center text-slate-500">המקורות יופיעו כאן לאחר הסנכרון הראשון.</p>}
-    </div>
+const LOGO_URL = "https://media.base44.com/images/public/6a5cb44eb599d294f260c3f8/d7a412404_collegeLogoText.png";
+
+export default function HomeIntro({ onEnter, syncError }) {
+  return <section className="mx-auto flex min-h-[calc(100vh-65px)] max-w-7xl flex-col items-center justify-center gap-8 px-5 py-12 text-center" dir="rtl">
+    <img src={LOGO_URL} alt="המכללה הלאומית לאיתנות ישראלית" className="h-auto w-64 rounded-2xl sm:w-80" />
+    <h1 className="text-5xl font-black leading-tight text-slate-950 dark:text-white sm:text-7xl">מאגרי חירום</h1>
+    {syncError && <p className="max-w-md rounded-2xl border border-amber-300/50 bg-amber-50 p-4 text-sm text-amber-900 dark:bg-amber-400/10 dark:text-amber-200">הגיליון אינו זמין כרגע לצפייה ציבורית. לאחר עדכון הרשאת השיתוף, לחצו על כפתור הסנכרון למעלה.</p>}
+    <button onClick={() => onEnter("")} className="inline-flex items-center gap-3 rounded-full bg-amber-400 px-8 py-4 text-lg font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-amber-300">התחלה <ArrowLeft className="h-5 w-5" /></button>
   </section>;
 }
