@@ -88,5 +88,15 @@
 
   body {
     @apply bg-background text-foreground font-body;
+    margin: 0;
+    min-width: 320px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  button, select, input, textarea {
+    font: inherit;
   }
 }
