@@ -12,11 +12,11 @@ const Select = ({ label, value, options, onChange, onFocus, onBlur }) => <label 
 
 export default function FilterBar({ options, filters, setFilters }) {
   const [openSelect, setOpenSelect] = useState(null);
-  const change = (key) => (value) => setFilters((current) => ({ ...current, [key]: value }));
+  const change = (key) => (value) => { setFilters((current) => ({ ...current, [key]: value })); setOpenSelect(null); };
   const activeFilters = [["category", filters.category], ["type", filters.type], ["tag", filters.tag]].filter(([, value]) => value);
   return <>
     {openSelect && <div className="fixed inset-0 z-20 bg-black/40" onClick={() => setOpenSelect(null)} />}
-    <div className="sticky top-[65px] z-30 border-b border-slate-200 bg-slate-50/95 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95" dir="rtl">
+    <div className="fixed top-[65px] left-0 right-0 z-30 border-b border-slate-200 bg-slate-50/95 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95" dir="rtl">
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
         <h1 className="mb-2 font-black text-slate-950 dark:text-white text-5xl no-underline">מאגרי חירום</h1>
         <div className="flex flex-wrap gap-2">

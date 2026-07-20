@@ -39,6 +39,6 @@ export function mediaUrl(item) {
   return item.type === "סרטון" ? `https://drive.google.com/file/d/${item.id}/preview` : `https://docs.google.com/uc?export=download&id=${item.id}`;
 }
 
-export function thumbnailUrl(item) {
-  return `https://drive.google.com/thumbnail?id=${item.id}&sz=w1000`;
+export function thumbnailUrl(item, size = "w1000") {
+  return `https://drive.google.com/thumbnail?id=${item.id}&sz=${size}`;
 }

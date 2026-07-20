@@ -1,0 +1,21 @@
+{
+  "name": "MediaOverride",
+  "type": "object",
+  "properties": {
+    "media_id": {
+      "type": "string",
+      "description": "Google Drive file ID used as unique key"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Admin-edited display name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Admin-edited description"
+    }
+  },
+  "required": [
+    "media_id"
+  ]
+}

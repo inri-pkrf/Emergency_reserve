@@ -16,8 +16,7 @@ export function mergeMedia(incoming) {
   const seen = new Set(incoming.map((item) => item.id));
   const merged = incoming.map((item) => {
     const saved = byId.get(item.id);
-    if (!saved) return item;
-    return { ...saved, ...item, displayName: saved.manuallyEdited ? saved.displayName : item.displayName, description: saved.description || "", manuallyEdited: Boolean(saved.manuallyEdited) };
+    return saved ? { ...saved, ...item } : item;
   });
   current.filter((item) => !seen.has(item.id)).forEach((item) => merged.push(item));
   return storeMedia(merged);
