@@ -18,7 +18,7 @@ export default function FilterBar({ options, filters, setFilters }) {
     {openSelect && <div className="fixed inset-0 z-20 bg-black/40" onClick={() => setOpenSelect(null)} />}
     <div className="sticky top-[65px] z-30 border-b border-slate-200 bg-slate-50/95 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95" dir="rtl">
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
-        <h1 className="mb-2 text-2xl font-black text-slate-950 dark:text-white">מאגרי חירום</h1>
+        <h1 className="mb-2 font-black text-slate-950 dark:text-white text-5xl underline">מאגרי חירום</h1>
         <div className="flex flex-wrap gap-2">
           <Select label="מקור / קטגוריה" value={filters.category} options={options.categories} onChange={change("category")} onFocus={() => setOpenSelect("category")} onBlur={() => setOpenSelect(null)} />
           <Select label="סוג קובץ" value={filters.type} options={options.types} onChange={change("type")} onFocus={() => setOpenSelect("type")} onBlur={() => setOpenSelect(null)} />
