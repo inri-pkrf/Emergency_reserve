@@ -21,7 +21,8 @@ function extractFileId(url = "") {
 }
 
 function validDate(value = "") {
-  return /^\d{1,4}[./-]\d{1,2}[./-]\d{1,4}$/.test(value.trim()) || !Number.isNaN(Date.parse(value));
+  const datePart = value.trim().split(/\s+/)[0];
+  return /^\d{1,4}[./-]\d{1,2}[./-]\d{1,4}$/.test(datePart) || !Number.isNaN(Date.parse(datePart));
 }
 
 export function rowsToMedia(rows) {
