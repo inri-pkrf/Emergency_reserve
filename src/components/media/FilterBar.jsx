@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X, ChevronDown } from "lucide-react";
+import { tagColor } from "@/lib/tagColors";
 
 const Select = ({ label, value, options, onChange, onFocus, onBlur }) => <label className="relative min-w-36 flex-1">
   <span className="mb-1 block text-[11px] font-bold text-slate-500 dark:text-slate-400">{label}</span>
@@ -14,14 +15,17 @@ export default function FilterBar({ options, filters, setFilters }) {
   const change = (key) => (value) => setFilters((current) => ({ ...current, [key]: value }));
   const activeFilters = [["category", filters.category], ["type", filters.type], ["tag", filters.tag]].filter(([, value]) => value);
   return <>
-    {openSelect && <div className="fixed inset-0 z-20 bg-black/40" />}
-    <div className="sticky top-[65px] z-30 border-b border-slate-200 bg-slate-50/95 px-4 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95" dir="rtl">
-      <div className="mx-auto flex max-w-7xl flex-wrap gap-2">
-        <Select label="מקור / קטגוריה" value={filters.category} options={options.categories} onChange={change("category")} onFocus={() => setOpenSelect("category")} onBlur={() => setOpenSelect(null)} />
-        <Select label="סוג קובץ" value={filters.type} options={options.types} onChange={change("type")} onFocus={() => setOpenSelect("type")} onBlur={() => setOpenSelect(null)} />
-        <Select label="תגית" value={filters.tag} options={options.tags} onChange={change("tag")} onFocus={() => setOpenSelect("tag")} onBlur={() => setOpenSelect(null)} />
+    {openSelect && <div className="fixed inset-0 z-20 bg-black/40" onClick={() => setOpenSelect(null)} />}
+    <div className="sticky top-[65px] z-30 border-b border-slate-200 bg-slate-50/95 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95" dir="rtl">
+      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+        <h1 className="mb-2 text-2xl font-black text-slate-950 dark:text-white">מאגרי חירום</h1>
+        <div className="flex flex-wrap gap-2">
+          <Select label="מקור / קטגוריה" value={filters.category} options={options.categories} onChange={change("category")} onFocus={() => setOpenSelect("category")} onBlur={() => setOpenSelect(null)} />
+          <Select label="סוג קובץ" value={filters.type} options={options.types} onChange={change("type")} onFocus={() => setOpenSelect("type")} onBlur={() => setOpenSelect(null)} />
+          <Select label="תגית" value={filters.tag} options={options.tags} onChange={change("tag")} onFocus={() => setOpenSelect("tag")} onBlur={() => setOpenSelect(null)} />
+        </div>
+        {activeFilters.length > 0 && <div className="mt-2 flex flex-wrap items-center gap-2">{activeFilters.map(([key, value]) => <button key={key} onClick={() => change(key)("")} className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold ${tagColor(value)}`}>{value} <X className="h-3 w-3" /></button>)}<button onClick={() => setFilters({ category: "", type: "", tag: "", date: "" })} className="flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold text-slate-500 hover:bg-slate-200 dark:hover:bg-white/10"><X className="h-3 w-3" /> ניקוי</button></div>}
       </div>
-      {activeFilters.length > 0 && <div className="mx-auto mt-2 flex max-w-7xl flex-wrap items-center gap-2">{activeFilters.map(([key, value]) => <button key={key} onClick={() => change(key)("")} className="flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1.5 text-xs font-bold text-amber-900 dark:bg-amber-400/15 dark:text-amber-200">{value} <X className="h-3 w-3" /></button>)}<button onClick={() => setFilters({ category: "", type: "", tag: "", date: "" })} className="flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold text-slate-500 hover:bg-slate-200 dark:hover:bg-white/10"><X className="h-3 w-3" /> ניקוי</button></div>}
     </div>
   </>;
 }
