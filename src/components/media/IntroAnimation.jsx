@@ -18,41 +18,41 @@ const TEXT_COLORS = [
 
 const ZONES = [
   { xMin: 8, xMax: 22, yMin: 8, yMax: 20 },
-  { xMin: 35, xMax: 48, yMin: 6, yMax: 16 },
-  { xMin: 52, xMax: 65, yMin: 6, yMax: 16 },
   { xMin: 78, xMax: 92, yMin: 8, yMax: 20 },
+  { xMin: 8, xMax: 22, yMin: 78, yMax: 92 },
+  { xMin: 78, xMax: 92, yMin: 78, yMax: 92 },
   { xMin: 6, xMax: 18, yMin: 38, yMax: 58 },
   { xMin: 82, xMax: 94, yMin: 38, yMax: 58 },
-  { xMin: 8, xMax: 22, yMin: 78, yMax: 92 },
   { xMin: 35, xMax: 48, yMin: 84, yMax: 94 },
   { xMin: 52, xMax: 65, yMin: 84, yMax: 94 },
-  { xMin: 78, xMax: 92, yMin: 78, yMax: 92 },
+  { xMin: 35, xMax: 48, yMin: 6, yMax: 16 },
+  { xMin: 52, xMax: 65, yMin: 6, yMax: 16 },
 ];
 
 const BLOBS = [
-  { className: "bg-amber-400/10 dark:bg-amber-400/15", size: 400, x: 15, y: 20, duration: 22, delay: 0, radius: "60% 40% 50% 50%" },
-  { className: "bg-blue-500/8 dark:bg-blue-400/12", size: 350, x: 80, y: 25, duration: 26, delay: 4, radius: "40% 60% 60% 40%" },
-  { className: "bg-amber-500/8 dark:bg-amber-300/10", size: 300, x: 75, y: 75, duration: 24, delay: 7, radius: "50% 50% 40% 60%" },
-  { className: "bg-slate-400/5 dark:bg-slate-500/10", size: 450, x: 15, y: 70, duration: 30, delay: 2, radius: "55% 45% 60% 40%" },
-  { className: "bg-sky-400/6 dark:bg-sky-500/10", size: 320, x: 50, y: 50, duration: 28, delay: 10, radius: "45% 55% 50% 50%" },
+  { className: "bg-amber-400/15 dark:bg-amber-400/22", size: 400, x: 15, y: 20, duration: 22, delay: 0, radius: "60% 40% 50% 50%" },
+  { className: "bg-blue-500/12 dark:bg-blue-400/18", size: 350, x: 80, y: 25, duration: 26, delay: 4, radius: "40% 60% 60% 40%" },
+  { className: "bg-amber-500/12 dark:bg-amber-300/16", size: 300, x: 75, y: 75, duration: 24, delay: 7, radius: "50% 50% 40% 60%" },
+  { className: "bg-slate-400/8 dark:bg-slate-500/15", size: 450, x: 15, y: 70, duration: 30, delay: 2, radius: "55% 45% 60% 40%" },
+  { className: "bg-sky-400/10 dark:bg-sky-500/16", size: 320, x: 50, y: 50, duration: 28, delay: 10, radius: "45% 55% 50% 50%" },
 ];
 
 const STREAKS = [
-  { className: "from-transparent via-amber-400/15 to-transparent dark:via-amber-300/20", width: 50, angle: 15, y: 30, duration: 15, delay: 0 },
-  { className: "from-transparent via-blue-400/12 to-transparent dark:via-blue-300/18", width: 40, angle: -10, y: 60, duration: 18, delay: 5 },
-  { className: "from-transparent via-slate-400/10 to-transparent dark:via-slate-300/15", width: 60, angle: 20, y: 80, duration: 20, delay: 8 },
-  { className: "from-transparent via-amber-400/10 to-transparent dark:via-amber-300/15", width: 45, angle: -5, y: 15, duration: 17, delay: 12 },
+  { className: "from-transparent via-amber-400/22 to-transparent dark:via-amber-300/28", width: 50, angle: 15, y: 30, duration: 15, delay: 0 },
+  { className: "from-transparent via-blue-400/18 to-transparent dark:via-blue-300/24", width: 40, angle: -10, y: 60, duration: 18, delay: 5 },
+  { className: "from-transparent via-slate-400/15 to-transparent dark:via-slate-300/20", width: 60, angle: 20, y: 80, duration: 20, delay: 8 },
+  { className: "from-transparent via-amber-400/16 to-transparent dark:via-amber-300/22", width: 45, angle: -5, y: 15, duration: 17, delay: 12 },
 ];
 
 const PARTICLES = [
-  { color: "bg-amber-400/25 dark:bg-amber-300/30", size: 5, x: 10, duration: 16, delay: 0 },
-  { color: "bg-blue-400/25 dark:bg-blue-300/30", size: 4, x: 25, duration: 20, delay: 3 },
-  { color: "bg-slate-400/20 dark:bg-slate-300/25", size: 6, x: 45, duration: 18, delay: 6 },
-  { color: "bg-amber-400/20 dark:bg-amber-300/25", size: 3, x: 65, duration: 22, delay: 2 },
-  { color: "bg-sky-400/25 dark:bg-sky-300/30", size: 5, x: 80, duration: 17, delay: 9 },
-  { color: "bg-blue-400/20 dark:bg-blue-300/25", size: 4, x: 90, duration: 19, delay: 12 },
-  { color: "bg-amber-400/20 dark:bg-amber-300/25", size: 4, x: 35, duration: 21, delay: 7 },
-  { color: "bg-slate-400/15 dark:bg-slate-300/20", size: 5, x: 55, duration: 23, delay: 14 },
+  { color: "bg-amber-400/35 dark:bg-amber-300/40", size: 5, x: 10, duration: 16, delay: 0 },
+  { color: "bg-blue-400/35 dark:bg-blue-300/40", size: 4, x: 25, duration: 20, delay: 3 },
+  { color: "bg-slate-400/30 dark:bg-slate-300/35", size: 6, x: 45, duration: 18, delay: 6 },
+  { color: "bg-amber-400/30 dark:bg-amber-300/35", size: 3, x: 65, duration: 22, delay: 2 },
+  { color: "bg-sky-400/35 dark:bg-sky-300/40", size: 5, x: 80, duration: 17, delay: 9 },
+  { color: "bg-blue-400/30 dark:bg-blue-300/35", size: 4, x: 90, duration: 19, delay: 12 },
+  { color: "bg-amber-400/30 dark:bg-amber-300/35", size: 4, x: 35, duration: 21, delay: 7 },
+  { color: "bg-slate-400/25 dark:bg-slate-300/30", size: 5, x: 55, duration: 23, delay: 14 },
 ];
 
 const RINGS = [
@@ -62,7 +62,7 @@ const RINGS = [
 ];
 
 const BASE_CYCLE = 8500;
-const FLOATER_COUNT = 5;
+const FLOATER_COUNT = 8;
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const randomInZone = (zone) => ({
@@ -115,7 +115,7 @@ function Particle({ color, size, x, duration, delay }) {
 function AmbientRing({ size, x, y, duration, delay }) {
   return (
     <motion.div
-      className="absolute rounded-full border border-amber-400/10 dark:border-amber-400/15"
+      className="absolute rounded-full border border-amber-400/15 dark:border-amber-400/22"
       style={{ width: size, height: size, left: `${x}%`, top: `${y}%` }}
       animate={{ rotate: 360, scale: [1, 1.1, 1] }}
       transition={{
