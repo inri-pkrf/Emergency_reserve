@@ -1,10 +1,12 @@
 import { ArrowLeft } from "lucide-react";
+import ThemeControls from "@/components/media/ThemeControls";
 
 const LOGO_LIGHT = "https://media.base44.com/images/public/6a5cb44eb599d294f260c3f8/d7a412404_collegeLogoText.png";
 const LOGO_DARK = "https://media.base44.com/images/public/6a5cb44eb599d294f260c3f8/015a95113_whiteLogo.png";
 
-export default function HomeIntro({ theme, onEnter, syncError }) {
+export default function HomeIntro({ theme, onTheme, onEnter, syncError }) {
   return <section className="mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center gap-10 px-5 py-12 text-center" dir="rtl">
+    <div className="fixed top-4 left-4 z-40"><ThemeControls theme={theme} onTheme={onTheme} /></div>
     <img src={theme === "dark" ? LOGO_DARK : LOGO_LIGHT} alt="המכללה הלאומית לאיתנות ישראלית" className="h-auto w-72 rounded-2xl sm:w-96" />
     <h1 className="text-5xl font-black leading-tight text-slate-950 dark:text-white sm:text-7xl">מאגרי חירום</h1>
     <p className="max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">ארכיון דיגיטלי דינמי המרכז תיעוד מלחמות, מבצעים ופעילויות פיקוד העורף.<br />מנוע סינון חכם מבוסס תגיות המאפשר ניווט מהיר ואיתור תכנים דומים ומשלימים.</p>
