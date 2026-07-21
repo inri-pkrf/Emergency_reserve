@@ -30,10 +30,29 @@ const ZONES = [
 ];
 
 const BLOBS = [
-  { className: "bg-amber-400/10 dark:bg-amber-400/15", size: 400, x: 15, y: 20, duration: 22, delay: 0 },
-  { className: "bg-blue-500/8 dark:bg-blue-400/12", size: 350, x: 80, y: 25, duration: 26, delay: 4 },
-  { className: "bg-amber-500/8 dark:bg-amber-300/10", size: 300, x: 75, y: 75, duration: 24, delay: 7 },
-  { className: "bg-slate-400/5 dark:bg-slate-500/10", size: 450, x: 15, y: 70, duration: 30, delay: 2 },
+  { className: "bg-amber-400/10 dark:bg-amber-400/15", size: 400, x: 15, y: 20, duration: 22, delay: 0, radius: "60% 40% 50% 50%" },
+  { className: "bg-blue-500/8 dark:bg-blue-400/12", size: 350, x: 80, y: 25, duration: 26, delay: 4, radius: "40% 60% 60% 40%" },
+  { className: "bg-amber-500/8 dark:bg-amber-300/10", size: 300, x: 75, y: 75, duration: 24, delay: 7, radius: "50% 50% 40% 60%" },
+  { className: "bg-slate-400/5 dark:bg-slate-500/10", size: 450, x: 15, y: 70, duration: 30, delay: 2, radius: "55% 45% 60% 40%" },
+  { className: "bg-sky-400/6 dark:bg-sky-500/10", size: 320, x: 50, y: 50, duration: 28, delay: 10, radius: "45% 55% 50% 50%" },
+];
+
+const STREAKS = [
+  { className: "from-transparent via-amber-400/15 to-transparent dark:via-amber-300/20", width: 50, angle: 15, y: 30, duration: 15, delay: 0 },
+  { className: "from-transparent via-blue-400/12 to-transparent dark:via-blue-300/18", width: 40, angle: -10, y: 60, duration: 18, delay: 5 },
+  { className: "from-transparent via-slate-400/10 to-transparent dark:via-slate-300/15", width: 60, angle: 20, y: 80, duration: 20, delay: 8 },
+  { className: "from-transparent via-amber-400/10 to-transparent dark:via-amber-300/15", width: 45, angle: -5, y: 15, duration: 17, delay: 12 },
+];
+
+const PARTICLES = [
+  { color: "bg-amber-400/25 dark:bg-amber-300/30", size: 5, x: 10, duration: 16, delay: 0 },
+  { color: "bg-blue-400/25 dark:bg-blue-300/30", size: 4, x: 25, duration: 20, delay: 3 },
+  { color: "bg-slate-400/20 dark:bg-slate-300/25", size: 6, x: 45, duration: 18, delay: 6 },
+  { color: "bg-amber-400/20 dark:bg-amber-300/25", size: 3, x: 65, duration: 22, delay: 2 },
+  { color: "bg-sky-400/25 dark:bg-sky-300/30", size: 5, x: 80, duration: 17, delay: 9 },
+  { color: "bg-blue-400/20 dark:bg-blue-300/25", size: 4, x: 90, duration: 19, delay: 12 },
+  { color: "bg-amber-400/20 dark:bg-amber-300/25", size: 4, x: 35, duration: 21, delay: 7 },
+  { color: "bg-slate-400/15 dark:bg-slate-300/20", size: 5, x: 55, duration: 23, delay: 14 },
 ];
 
 const RINGS = [
@@ -43,7 +62,7 @@ const RINGS = [
 ];
 
 const BASE_CYCLE = 8500;
-const FLOATER_COUNT = 10;
+const FLOATER_COUNT = 5;
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const randomInZone = (zone) => ({
@@ -51,21 +70,44 @@ const randomInZone = (zone) => ({
   y: zone.yMin + Math.random() * (zone.yMax - zone.yMin),
 });
 
-function AmbientBlob({ className, size, x, y, duration, delay }) {
+function AmbientBlob({ className, size, x, y, duration, delay, radius }) {
   const drift = useMemo(() => ({
     x: (Math.random() - 0.5) * 200,
     y: (Math.random() - 0.5) * 200,
   }), []);
   return (
     <motion.div
-      className={`absolute rounded-full blur-3xl ${className}`}
-      style={{ width: size, height: size, left: `${x}%`, top: `${y}%` }}
+      className={`absolute blur-3xl ${className}`}
+      style={{ width: size, height: size, left: `${x}%`, top: `${y}%`, borderRadius: radius }}
       animate={{
         x: [0, drift.x, -drift.x * 0.5, 0],
         y: [0, drift.y, -drift.y * 0.5, 0],
         scale: [1, 1.2, 0.9, 1],
+        borderRadius: [radius, "50% 60% 40% 50%", radius],
       }}
       transition={{ duration, repeat: Infinity, ease: "easeInOut", delay }}
+    />
+  );
+}
+
+function GradientStreak({ className, width, angle, y, duration, delay }) {
+  return (
+    <motion.div
+      className={`absolute h-px bg-gradient-to-r ${className}`}
+      style={{ width: `${width}%`, left: 0, top: `${y}%`, rotate: `${angle}deg` }}
+      animate={{ x: ["-120%", "250%"] }}
+      transition={{ duration, repeat: Infinity, ease: "linear", delay }}
+    />
+  );
+}
+
+function Particle({ color, size, x, duration, delay }) {
+  return (
+    <motion.div
+      className={`absolute rounded-full ${color}`}
+      style={{ width: size, height: size, left: `${x}%`, bottom: "5%" }}
+      animate={{ y: [0, "-80vh"], opacity: [0, 0.6, 0.5, 0] }}
+      transition={{ duration, repeat: Infinity, ease: "linear", delay }}
     />
   );
 }
@@ -86,7 +128,7 @@ function AmbientRing({ size, x, y, duration, delay }) {
 
 function Floater({ pool, index }) {
   const [tick, setTick] = useState(0);
-  const cycle = BASE_CYCLE + index * 600;
+  const cycle = BASE_CYCLE + index * 1200;
   const zone = ZONES[index % ZONES.length];
 
   useEffect(() => {
@@ -110,12 +152,12 @@ function Floater({ pool, index }) {
       key={tick}
       initial={{ opacity: 0, scale: 0.3, x: "-50%", y: "-50%" }}
       animate={{
-        opacity: [0, 0.8, 0.7, 0],
-        scale: [0.3, scale, scale, 0.3],
+        opacity: [0, 0.8, 0.75, 0.8, 0.7, 0],
+        scale: [0.3, scale, scale * 1.15, scale * 0.95, scale * 1.1, 0.3],
       }}
       transition={{
         duration: cycle / 1000,
-        times: [0, 0.15, 0.85, 1],
+        times: [0, 0.12, 0.3, 0.5, 0.85, 1],
         ease: "easeInOut",
       }}
       style={{ position: "absolute", left: `${pos.x}%`, top: `${pos.y}%` }}
@@ -150,6 +192,8 @@ export default function IntroAnimation({ categories = [] }) {
     <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ zIndex: 0 }}>
       {BLOBS.map((b, i) => <AmbientBlob key={`blob-${i}`} {...b} />)}
       {RINGS.map((r, i) => <AmbientRing key={`ring-${i}`} {...r} />)}
+      {STREAKS.map((s, i) => <GradientStreak key={`streak-${i}`} {...s} />)}
+      {PARTICLES.map((p, i) => <Particle key={`particle-${i}`} {...p} />)}
       {Array.from({ length: FLOATER_COUNT }, (_, i) => (
         <Floater key={i} pool={pool} index={i} />
       ))}
