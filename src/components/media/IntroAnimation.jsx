@@ -8,22 +8,40 @@ const WAR_LOGOS = [
 ];
 
 const TEXT_COLORS = [
-  "text-slate-400 dark:text-slate-500",
-  "text-amber-500/60 dark:text-amber-400/50",
-  "text-blue-500/50 dark:text-blue-400/40",
-  "text-slate-500 dark:text-slate-600",
-  "text-amber-600/50 dark:text-amber-300/40",
-  "text-sky-500/40 dark:text-sky-400/30",
+  "text-slate-400 dark:text-slate-300",
+  "text-amber-500/60 dark:text-amber-300/70",
+  "text-blue-500/50 dark:text-blue-300/60",
+  "text-slate-500 dark:text-slate-400",
+  "text-amber-600/50 dark:text-amber-200/60",
+  "text-sky-500/40 dark:text-sky-300/50",
+];
+
+const ZONES = [
+  { xMin: 8, xMax: 22, yMin: 8, yMax: 20 },
+  { xMin: 35, xMax: 48, yMin: 6, yMax: 16 },
+  { xMin: 52, xMax: 65, yMin: 6, yMax: 16 },
+  { xMin: 78, xMax: 92, yMin: 8, yMax: 20 },
+  { xMin: 6, xMax: 18, yMin: 38, yMax: 58 },
+  { xMin: 82, xMax: 94, yMin: 38, yMax: 58 },
+  { xMin: 8, xMax: 22, yMin: 78, yMax: 92 },
+  { xMin: 35, xMax: 48, yMin: 84, yMax: 94 },
+  { xMin: 52, xMax: 65, yMin: 84, yMax: 94 },
+  { xMin: 78, xMax: 92, yMin: 78, yMax: 92 },
 ];
 
 const BASE_CYCLE = 6500;
 const FLOATER_COUNT = 7;
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const randomInZone = (zone) => ({
+  x: zone.xMin + Math.random() * (zone.xMax - zone.xMin),
+  y: zone.yMin + Math.random() * (zone.yMax - zone.yMin),
+});
 
 function Floater({ pool, index }) {
   const [tick, setTick] = useState(0);
   const cycle = BASE_CYCLE + index * 800;
+  const zone = ZONES[index % ZONES.length];
 
   useEffect(() => {
     const id = setInterval(() => setTick((t) => t + 1), cycle);
@@ -32,22 +50,21 @@ function Floater({ pool, index }) {
 
   const data = useMemo(() => {
     const item = pick(pool);
-    const x = Math.random() * 80 + 10;
-    const y = Math.random() * 75 + 12;
+    const pos = randomInZone(zone);
     const scale = 0.5 + Math.random() * 0.6;
     const color = pick(TEXT_COLORS);
     const fontSize = 11 + Math.random() * 9;
-    return { item, x, y, scale, color, fontSize };
-  }, [tick, pool]);
+    return { item, pos, scale, color, fontSize };
+  }, [tick, pool, zone]);
 
-  const { item, x, y, scale, color, fontSize } = data;
+  const { item, pos, scale, color, fontSize } = data;
 
   return (
     <motion.div
       key={tick}
       initial={{ opacity: 0, scale: 0.3, x: "-50%", y: "-50%" }}
       animate={{
-        opacity: [0, 0.55, 0.45, 0],
+        opacity: [0, 0.6, 0.5, 0],
         scale: [0.3, scale, scale, 0.3],
       }}
       transition={{
@@ -55,7 +72,7 @@ function Floater({ pool, index }) {
         times: [0, 0.2, 0.8, 1],
         ease: "easeInOut",
       }}
-      style={{ position: "absolute", left: `${x}%`, top: `${y}%` }}
+      style={{ position: "absolute", left: `${pos.x}%`, top: `${pos.y}%` }}
     >
       {item.src ? (
         <img
