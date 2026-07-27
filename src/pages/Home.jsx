@@ -3,6 +3,7 @@ import { SHEET_URL, THEME_KEY } from "@/config/media";
 import { parseCsv, rowsToMedia } from "@/lib/mediaParser";
 import { loadMedia, mergeMedia, updateMedia } from "@/lib/mediaDb";
 import AppHeader from "@/components/media/AppHeader";
+import HomeFloatingButton from "@/components/media/HomeFloatingButton";
 import HomeIntro from "@/components/media/HomeIntro";
 import FilterBar from "@/components/media/FilterBar";
 import Gallery from "@/components/media/Gallery";
@@ -33,5 +34,5 @@ export default function Home() {
   const enter = (category) => { setFilters({ category, type: "", tag: "", date: "", search: "" }); setView("gallery"); };
   const openItem = (item) => { setSelected(item); setView("detail"); window.scrollTo(0, 0); };
   const save = (id, changes) => { const next = updateMedia(id, changes); setMedia(next); setSelected(next.find((item) => item.id === id)); base44.entities.MediaOverride.filter({ media_id: id }).then((existing) => { if (existing.length > 0) { base44.entities.MediaOverride.update(existing[0].id, { display_name: changes.displayName, description: changes.description }); } else { base44.entities.MediaOverride.create({ media_id: id, display_name: changes.displayName, description: changes.description }); } }).catch((e) => console.error("Override save failed:", e)); };
-  return <div className="min-h-screen overflow-x-clip bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">{view !== "home" && <AppHeader theme={theme} onTheme={() => setTheme(theme === "dark" ? "light" : "dark")} />}{view === "home" && <HomeIntro theme={theme} onTheme={() => setTheme(theme === "dark" ? "light" : "dark")} onEnter={enter} syncError={syncError} categories={options.categories} />}{view === "gallery" && <><FilterBar options={options} filters={filters} setFilters={setFilters} /><Gallery items={filtered} onOpen={openItem} syncError={syncError} /></>}{view === "detail" && selected && <><DetailBar item={selected} /><MediaDetail item={selected} onBack={() => setView("gallery")} onSave={save} isAdmin={isAdmin} similarItems={similarItems} onOpen={openItem} /></>}</div>;
+  return <div className="min-h-screen overflow-x-clip bg-slate-50 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">{view !== "home" && <AppHeader theme={theme} onTheme={() => setTheme(theme === "dark" ? "light" : "dark")} />}{view === "home" && <HomeIntro theme={theme} onTheme={() => setTheme(theme === "dark" ? "light" : "dark")} onEnter={enter} syncError={syncError} categories={options.categories} />}{view === "gallery" && <><FilterBar options={options} filters={filters} setFilters={setFilters} /><Gallery items={filtered} onOpen={openItem} syncError={syncError} /></>}{view === "detail" && selected && <><DetailBar item={selected} /><MediaDetail item={selected} onBack={() => setView("gallery")} onSave={save} isAdmin={isAdmin} similarItems={similarItems} onOpen={openItem} /></>}<HomeFloatingButton /></div>;
 }
