@@ -45,7 +45,13 @@ export default function FilterBar({ options, filters, setFilters }) {
         </div>
         {activeFilters.length > 0 && <div className="mt-2 flex flex-wrap items-center gap-2">{activeFilters.map(([key, value]) => <button key={key} onClick={() => change(key)("")} className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold ${tagColor(value)}`}>{value} <X className="h-3 w-3" /></button>)}<button onClick={() => setFilters({ category: "", type: "", tag: "", date: "", search: "" })} className="flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold text-slate-500 hover:bg-slate-200 dark:hover:bg-white/10"><X className="h-3 w-3" /> ניקוי</button></div>}
       </div>
-      {keyboardOpen && <CustomKeyboard lang={keyboardLang} onKeyPress={handleKeyPress} onBackspace={handleBackspace} onSpace={handleSpace} onToggleLang={toggleLang} onClose={closeKeyboard} />}
     </div>
+    {keyboardOpen && (
+      <div className="fixed inset-0 z-40 flex items-center justify-center px-4 pointer-events-none">
+        <div className="pointer-events-auto w-full max-w-3xl overflow-hidden rounded-2xl shadow-2xl ring-1 ring-slate-200 dark:ring-white/10">
+          <CustomKeyboard lang={keyboardLang} onKeyPress={handleKeyPress} onBackspace={handleBackspace} onSpace={handleSpace} onToggleLang={toggleLang} onClose={closeKeyboard} />
+        </div>
+      </div>
+    )}
   </>;
 }

@@ -1,5 +1,7 @@
 import { Delete, X } from "lucide-react";
 
+const NUMBERS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+
 const HEBREW_ROWS = [
   ["ק", "ר", "א", "ט", "ו", "ן", "ם", "פ"],
   ["ש", "ד", "ג", "כ", "ע", "י", "ח", "ל", "ך", "ף"],
@@ -24,8 +26,8 @@ const Key = ({ children, onClick, className = "" }) => (
 export default function CustomKeyboard({ lang, onKeyPress, onBackspace, onSpace, onToggleLang, onClose }) {
   const rows = lang === "he" ? HEBREW_ROWS : ENGLISH_ROWS;
   return (
-    <div className="border-t border-slate-300 bg-slate-100 dark:border-white/10 dark:bg-slate-900" dir="ltr">
-      <div className="mx-auto max-w-3xl p-3">
+    <div className="bg-slate-100 dark:bg-slate-900" dir="ltr">
+      <div className="p-3">
         <div className="mb-2 flex items-center justify-between" dir="rtl">
           <span className="text-xs font-bold text-slate-400 dark:text-slate-500">{lang === "he" ? "מקלדת עברית" : "English Keyboard"}</span>
           <button
@@ -34,6 +36,9 @@ export default function CustomKeyboard({ lang, onKeyPress, onBackspace, onSpace,
           >
             <X className="h-4 w-4" /> סגור מקלדת
           </button>
+        </div>
+        <div className="mb-1.5 flex justify-center gap-1.5">
+          {NUMBERS.map((n) => <Key key={n} onClick={() => onKeyPress(n)}>{n}</Key>)}
         </div>
         {rows.map((row, i) => (
           <div key={i} className="mb-1.5 flex justify-center gap-1.5">
